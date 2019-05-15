@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Beta</title>
+        <!-- jQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="resources/asset/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+        <script src="resources/js/patch/resizable-rotation.patch.js"></script>
+        <!-- Fontawesome -->
+        <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+        <!-- Font -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+        <!-- Style -->
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/widget-ui.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/flat.css">
+        <!-- Add on -->
+        <!--script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js"></script-->
+        <script src="resources/asset/jscolor/jscolor.min.js"></script>
+        <script src="resources/asset/FileSaver.min.js"></script>
+        <script src="resources/asset/popper.js"></script>
+        
+    </head>
+    <body>
+        <script src="resources/js/main.js"></script>
+        <section id="site-ex">
+            <div style="margin:5px;font-size:14px;font-weight:bold;font-family: Arial, Helvetica, sans-serif;">
+                Site Explorer
+                <label id="open-file"><input type="file"/></label>
+                <label id="save-file"><i class="fas fa-save"></i></label>
+            </div>
+            <div style="width:250px;height: 250px; overflow: auto; background: #fefefe;">
+                <article class="site-list"></article>
+                <div id="new-page"><i class="far fa-plus-square"></i> New</div>
+            </div>
+        </section>
+        <section id="screen-size">
+            <table>
+                <tr>
+                    <td><i id="phone-screen" class="fas fa-mobile-alt"></i></td>
+                    <td>Phone</td>
+                    <td><select class="phone-screen-size"></select></td>
+                </tr>
+                <tr>
+                    <td><i id="tablet-screen" class="fas fa-tablet-alt"></i></td>
+                    <td>Tablet/iPad</td>
+                    <td><select class="tablet-screen-size"></select></td>
+                </tr>
+                <tr>
+                    <td><i id="desktop-screen" class="fas fa-desktop"></i></td>
+                    <td>Desktop</td>
+                    <td><select class="desktop-screen-size"></select></td>
+                </tr>
+                <tr>
+                    <td><i id="custom-screen" class="fas fa-expand"></i></td>
+                    <td>Custom</td>
+                    <td><input type="number" class="custom-width">x<input type="number" class="custom-height"></td>
+                </tr>
+                <tr>
+                    <td><i id="full-screen" class="fas fa-expand-arrows-alt"></i></td>
+                    <td>Full</td>
+                    <td class="size-screen"></td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="tool-bar">
+            <li class="show-tool">
+                <center>
+                    <i class="fas fa-pencil-alt"></i>
+                    Draw
+                </center>
+            </li>
+            <li class="show-property">
+                <center>
+                    <i class="fas fa-paint-brush"></i>
+                    Edit
+                </center>
+            </li>
+            <li class="site-management">
+                <center>
+                    <i class="fas fa-sitemap"></i>
+                    Sitemap
+                </center>
+            </li>
+            <li class="preview" id="preview-file">
+                <center>
+                    <i class="fas fa-play"></i>
+                    Preview
+                </center>
+            </li>
+            <li class="setting">
+                <center>
+                    <i class="fas fa-cog"></i>
+                    Setting
+                </center>
+            </li>
+        </section>
+
+        <section class="tool-content container-content">
+            <article>
+                <div id="draw-rect" class="btn-draw" value="1"></div>
+                <div id="draw-circle" class="btn-draw" value="2"></div>
+                <div id="draw-line" class="btn-draw" value="3"></div>
+                <div id="draw-text" class="btn-draw" value="4"></div>
+            </article>
+            <hr>
+            <article style="display:inline-block;">
+                <div id="draw-input-text" class="btn-draw-input" value="1">
+                    <i class="far fa-edit"></i> Text
+                </div>
+                <div id="draw-input-number" class="btn-draw-input" value="2">
+                    <i class="far fa-edit"></i> Number
+                </div>
+                <div id="draw-input-radio" class="btn-draw-input" value="3">
+                    <i class="far fa-dot-circle"></i> Radio
+                </div>
+                <div id="draw-input-checkbox" class="btn-draw-input" value="4">
+                    <i class="far fa-check-square"></i> Check
+                </div>
+                <div id="draw-input-range" class="btn-draw-input" value="5">
+                    <i class="fas fa-sliders-h"></i> Range
+                </div>
+                <div id="draw-select" class="btn-draw-input" value="0" style="pointer-events: none;background: gray">
+                    <i class="far fa-caret-square-down"></i> Select
+                </div>
+            </article>
+            <hr>
+            <input type="search" class="search-gallery" style="border-radius: 5px;" placeholder="Search">
+            <article class="gallery"></article>
+        </section>
+        <section id="menu-property" class="property-content container-content">
+            <table width="200">
+                <tr>
+                    <td class="label-input">X</td>
+                    <td><input type="number" id="css-left" class="css-value input-basic-size"></td>
+                    <td class="label-input">Y</td>
+                    <td><input type="number" id="css-top" class="css-value input-basic-size"></td>
+                </tr>
+                <tr>
+                    <td class="label-input">W</td>
+                    <td><input type="number" id="css-width" class="css-value input-basic-size"></td>
+                    <td class="label-input">H</td>
+                    <td><input type="number" id="css-height" class="css-value input-basic-size"></td>
+                </tr>
+                <tr>
+                    <td class="label-input">R</td>
+                    <td><input type="number" id="css-rotate" class="css-value input-basic-size"></td>
+                </tr>
+            </table>
+            <div class="header-collapsible">Offset</div>
+            <table width="200">
+                <tr>
+                    <td colspan="4">Margin</td>
+                </tr>
+                <tr>
+                    <td>T</td>
+                    <td><input type="number" class="input-basic-size"></td>
+                    <td>L</td>
+                    <td><input type="number" class="input-basic-size"></td>
+                </tr>
+                <tr>
+                    <td>R</td>
+                    <td><input type="number" class="input-basic-size"></td>
+                    <td>B</td>
+                    <td><input type="number" class="input-basic-size"></td>
+                </tr>
+                <tr>
+                    <td colspan="4">Padding</td>
+                </tr>
+                <tr>
+                    <td>T</td>
+                    <td><input type="number" class="input-basic-size"></td>
+                    <td>L</td>
+                    <td><input type="number" class="input-basic-size"></td>
+                </tr>
+                <tr>
+                    <td>R</td>
+                    <td><input type="number" class="input-basic-size"></td>
+                    <td>B</td>
+                    <td><input type="number" class="input-basic-size"></td>
+                </tr>
+                <!--tr>
+                    <td>box-sizing</td>
+                    <td>
+                        <select>
+                            <option>content-box</option>
+                            <option>border-box</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Margin</td>
+                    <td>Padding</td>
+                </tr -->
+            </table>
+            <div class="header-collapsible">Font</div>
+            <table width="200">
+                <tr>
+                    <td colspan="2">
+                        <input list="list-font-family-name" id="css-font-family" class="css-value">
+                        <datalist id="list-font-family-name">
+                            <option value="Georgia">Georgia</option>
+                            <option value="Palatino Linotype">Palatino Linotype</option>
+                            <option value="Book Antiqua">Book Antiqua</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Helvetica">Helvetica</option>
+                            <option value="Arial Black">Arial Black</option>
+                            <option value="Impact">Impact</option>
+                            <option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
+                            <option value="Tahoma">Tahoma</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Lucida Console">Lucida Console</option>
+                        </datalist>
+                    </td>
+                </tr>
+                <!--tr>
+                    <td><select id="google-font"></select></td>
+                </tr-->
+                <tr>
+                    <td colspan="2">
+                    <select id="css-font-generic-family">
+                        <option value="">None</option>
+                        <option value="serif">Serif</option>
+                        <option value="sans-serif">Sans-serif</option>
+                        <option value="cursive">Cursive</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="monospace">Monospace</option>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="css-font-size" class="css-value"></td>
+                    <td><select id="css-font-style">
+                            <option value="light">Light</option>
+                            <option value="light italic">Light Italic</option>
+                            <option value="regular">Regular</option>
+                            <option value="regular italic">Regular Italic</option>
+                            <option value="medium">Medium</option>
+                            <option value="medium italic">Medium Italic</option>
+                            <option value="bold">Bold</option>
+                            <option value="bold italic">Bold Italic</option>
+                            <option value="black">Black</option>
+                            <option value="black italic">Black Italic</option>
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label class="icon-color" for="css-color"></label></td>
+                    <td><input type="text" id="css-color" class="jscolor css-value"></td>
+                </tr>
+            </table>
+            <div class="header-collapsible">Border</div>
+            <table width="200">
+                <tr>
+                    <td style="width:35px;"><input type="number" id="css-border-width" class="css-value"></td>
+                    <td>
+                        <div class="select-option border-tool">
+                            <li id="css-border-style"><div class="border-style" style="border-style: none"></div></li>
+                            <ul class="option-group">
+                                <li class="option"><div class="border-style-option" style="border-style: solid"></div></li>
+                                <li class="option"><div class="border-style-option" style="border-style: dotted"></div></li>
+                                <li class="option"><div class="border-style-option" style="border-style: dashed"></div></li>
+                                <li class="option"><div class="border-style-option" style="border-style: double"></div></li>
+                                <li class="option"><div class="border-style-option" style="border-style: groove"></div></li>
+                                <li class="option"><div class="border-style-option" style="border-style: ridge"></div></li>
+                                <li class="option"><div class="border-style-option" style="border-style: inset"></div></li>
+                                <li class="option"><div class="border-style-option" style="border-style: outset"></div></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td><input type="text" id="css-border-color" class="jscolor css-value"></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Radius<input type="number" id="css-border-radius" class="css-value"></td>
+                </tr>
+            </table>
+            <div class="header-collapsible">Background</div>
+            <table width="200">
+                <tr>
+                    <td><input type="text" id="css-opacity"/></td>
+                    <td><input type="range" id="range-transparent" min="0" max="100" value="100" step="1"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>
+                            <input type="radio" class="radio-bg-color" name="type-bg-color" value="0"/>
+                            Solid
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" class="radio-bg-color" name="type-bg-color" value="1"/>
+                            Gradients
+                        </label>
+                    </td>
+                </tr>
+                <tr class="type-bg-color type-bg-color-0">
+                    <td>Color</td>
+                    <td><input type="text" id="css-background-color" class="jscolor css-value"></td>
+                </tr>
+                <tr class="type-bg-color type-bg-color-1">
+                    <td>Type</td>
+                    <td>
+                        <select class="type-gradients">
+                            <option value="linear">Linear</option>
+                            <option value="radial">Radial</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="type-bg-color type-bg-color-1 gradients-color-number">
+                    <td>number</td>
+                    <td><input type="number" id="gradients-color-count"/></td>
+                </tr>
+            </table>
+            <div class="header-collapsible">Shadow</div>
+            <table width="200">
+                <tr>
+                    <td colspan="2">
+                        <label class="shadow-type-label">Type</label>
+                        <div class="shadow-type">Outset</div>
+                        <div class="shadow-type">Inset</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        H <input type="number" id="shadow-h-offset" class="input-shadow"/>
+                    </td>
+                    <td>
+                        V <input type="number" id="shadow-v-offset" class="input-shadow"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        B <input type="number" id="shadow-blur" class="input-shadow"/>
+                    </td>
+                    <td>
+                        S <input type="number" id="shadow-spread" class="input-shadow"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Color <input type="text" id="css-shadow-color" class="jscolor input-shadow">
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="setting-content container-content"></section>
+
+        <section style="position: fixed;top:0;left:0;width:30px;height: 100%;" hidden>
+            
+            <button id="menu-form"></button>
+            <input type="file" multiple webkitdirectory id="fileURL" hidden/>
+        </section>
+
+        <div id="contextmenu">
+            <div id="package" class="contextmenu-content">
+                <img src="resources/svg/icon/box.svg" width="15" height="15">
+                Package
+            </div>
+            <div class="contextmenu-content">
+                <i class="fas fa-link"></i>
+                Link to
+                <select class="list-page" style="margin-left:20px;"></select>
+                <i class="fas fa-crosshairs"></i>
+            </div>
+            <div id="android" class="contextmenu-content">
+                <i class="fab fa-android"></i>
+                Android
+            </div>
+        </div>
+
+        <div class="android-code">
+            <div class="close"></div>
+            <span>shape.xml</span> 
+            <div>
+                <textarea class="android-xml" contenteditable="true" spellcheck="false"></textarea>
+            </div>
+        </div>
+        <div class="loading" style="background: #fff;width: 100%;height: 100%;text-align: center;position: absolute;top:0;left: 0;font-size:32px;font-family: Arial, Helvetica, sans-serif;">Loading...</div>
+    </body>
+    <script src="include.js"></script>
+    <!--script src="resources/js/svg.js"></script-->
+</html>

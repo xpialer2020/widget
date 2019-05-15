@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>uDesign</title>
+    <link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sriracha" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+</head>
+
+<style>
+    body{
+        padding: 0;
+        margin: 0;
+        color: #fff;
+    }
+    #logo{
+        font-size: 76px;
+        font-weight: bold;
+        text-align: center;
+        font-family: 'Allerta Stencil', sans-serif;
+        width: 300px;
+        border-radius: 5px;
+        color: #FAFAFA;
+        /*background: linear-gradient( #092942 , #0D79AD) ;*/
+    }
+    .main-content{
+        width: calc(100% - 40px);
+        height: 620px;
+        margin: 50px auto auto auto;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-image: url('background.jpg');
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+    .main-content > div {
+        width: 720px;
+        padding: 20px;
+        margin: auto;
+        display: block;
+    }
+    .sub-content{
+        flex-grow : 1;
+        height: 100px;
+        width: 125px;
+        padding: 5px;
+        margin: 2px;
+        /*font-family: 'Sriracha', cursive;*/
+        font-family: Arial, Helvetica, sans-serif;
+        border-radius: 5px;
+        text-align: center;
+        color: #FFFFFF;
+    }
+    .sub-content center{
+        font-size: 36px;
+        font-weight: bold;
+    }
+    #btn-cs{
+        width: 125px;
+        margin: 25px auto;
+        padding: 8px;
+        display: block;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        text-align: center;
+	color: #fff;
+        background: linear-gradient(to top, #2c3e50, #3498db);
+        border-radius: 20px;
+    }
+</style>
+<body>
+    <div style="position: fixed;top:0;left:0;width: calc(100% - 10px);height: 40px;padding: 5px;background-color: #000;">
+        <!-- Nav -->
+        <span style="float: right;color: #fff;margin-top:10px;font-size: 16px;font-family: Arial, sans-serif;">Available 2018</span>
+    </div>
+    <div class="main-content">
+        <div id="logo">uDesign</div>
+        <div style="padding: 20px;font-size: 24px;font-family: 'Sriracha', cursive;text-align: center;">Tool for creating and designing website and user interface</div>
+        <a id="btn-cs" href="./Beta/uDesign.html" style="text-decoration:none;">Beta Version</a>
+        <div style="text-align: center;font-size: 18px;">
+            Browser Recommend 
+            <i class="far fa-thumbs-up" style="font-size: 18px;"></i>
+            <i class="fab fa-chrome" style="font-size: 48px;color: #fff"></i>
+        </div>
+        <div style="text-align: center;font-size: 48px;">
+            <i class="fab fa-html5" style="color: #f39c12"></i>
+            <i class="fab fa-css3-alt" style="color: #0984e3"></i>
+            <i class="fab fa-js-square" style="color:#f9ca24"></i>
+            <!--i class="fab fa-angular" style="color: #000"></i-->
+            <i class="fab fa-font-awesome" style="color: #0984e3"></i>
+        </div>
+        
+    </div>
+</body>
+</html>

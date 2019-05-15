@@ -1,2 +1,2 @@
-# widget
-Tool for creating and designing website and UI
+# uDesign
+UI/UX design concept for web and android layout 
